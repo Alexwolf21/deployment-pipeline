@@ -21,14 +21,14 @@ pipeline {
         stage('Test'){
             steps{
                 echo 'Running scripts...'
-                sh 'npm test'
+                bat 'npm test'
             }
         }
         stage('Deploy'){
             steps{
                 script {
-                    sh 'docker rm -f sample-app || true'
-                    sh "docker run -d --name sample-app -p 8081:3000 ${IMAGE_NAME}:${env.BUILD_NUMBER}"
+                    bat 'docker rm -f sample-app || echo Container not found'
+                    bat "docker run -d --name sample-app -p 8081:3000 ${IMAGE_NAME}:${env.BUILD_NUMBER}"
                 }
             }
         }
