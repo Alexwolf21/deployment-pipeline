@@ -1,0 +1,8 @@
+global:
+  scrape_interval: 15s # How often to scrape targets
+
+scrape_configs:
+  - job_name: "sample-app"
+    static_configs:
+      # Change "localhost" to "host.docker.internal" on Windows if needed.
+      - targets: ["localhost:8081"]
