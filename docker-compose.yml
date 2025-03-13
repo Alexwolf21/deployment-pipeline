@@ -1,0 +1,44 @@
+version: '3'
+services:
+  # Prometheus Service
+  prometheus:
+    image: prom/prometheus      # Use the official Prometheus image (update the version as needed)
+    container_name: prometheus
+    ports:
+      - "9090:9090"                      # Maps Prometheus web UI from container port 9090 to host port 9090
+    volumes:
+      # Mount your custom Prometheus configuration file; ensure it's in the same directory as this compose file.
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml:ro
+      # Create a persistent volume for Prometheus data
+      - prometheus_data:/prometheus
+    networks:
+      - my_network
+    restart: always                      # Automatically restart the container if it fails
+
+  # Grafana Service
+  grafana:
+    image: grafana/grafana:latest         # Use the official Grafana image (update the version as needed)
+    container_name: grafana
+    ports:
+      - "3001:3000"                      # Maps Grafana web UI from container port 3000 to host port 3000
+    depends_on:
+      - prometheus                       # Ensure Prometheus starts before Grafana
+    environment:
+      # Set the admin password for Grafana; change "admin" to your desired password
+      GF_SECURITY_ADMIN_PASSWORD: "admin"
+    volumes:
+      # Create a persistent volume for Grafana data (dashboards, configurations, etc.)
+      - grafana_data:/var/lib/grafana
+    networks:
+      - my_network
+    restart: always
+
+# Define the network to allow inter-container communication
+networks:
+  my_network:
+    driver: bridge
+
+# Define persistent volumes for data storage
+volumes:
+  prometheus_data:
+  grafana_data:
