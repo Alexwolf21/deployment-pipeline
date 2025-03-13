@@ -30,15 +30,15 @@ resource "docker_container" "nginx_container" {
     name = docker_network.my_network.name
   }
 
-  # Map container port 80 to host port 80
+  # Map container port 80 to host port 88
   ports {
     internal = 80
-    external = 80
+    external = 88
   }
 
-  # Mount our custom Nginx configuration
+  # Mount our custom Nginx configuration(Specify the path to nginx.conf file on the system in host_path)
   volumes {
-    host_path      = "C:/Users/AUROSHREE/Desktop/Project/terraform/nginx.conf"
+    host_path      = "/Users/I529008/Desktop/terraform/nginx.conf"
     container_path = "/etc/nginx/nginx.conf"
   }
 }
