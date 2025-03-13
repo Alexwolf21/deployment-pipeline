@@ -1,0 +1,8 @@
+global:
+  scrape_interval: 15s
+
+scrape_configs:
+  - job_name: 'sample_app'
+    metrics_path: '/metrics'
+    static_configs:
+      - targets: ['sample-app:3000']   # This expects the sample-app container to be reachable by the hostname "sample-app"
