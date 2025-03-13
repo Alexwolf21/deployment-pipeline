@@ -2,6 +2,7 @@ pipeline {
     agent any
 
     environment {
+        PATH = "/opt/homebrew/bin:${env.PATH}"
         IMAGE_NAME = "sample-app"
     }
 
@@ -21,16 +22,14 @@ pipeline {
         stage('Test') {
             steps {
                 echo 'Running tests...'
-                // Use "bat" for Windows, "sh" for Linux/macOS.
-                bat 'npm test'
+                sh 'npm test'
             }
         }
         stage('Deploy') {
             steps {
                 script {
-                    bat 'docker rm -f sample-app || echo "Container not found"'
-                    // Run the new container on the "my_network" Docker network
-                    bat "docker run -d --name sample-app --network my_network -p 3000:3000 ${IMAGE_NAME}:${env.BUILD_NUMBER}"
+                    sh 'docker rm -f sample-app || echo "Container not found"'
+                    sh "docker run -d --name sample-app --network my_network -p 3000:3000 ${IMAGE_NAME}:${env.BUILD_NUMBER}"
                 }
             }
         }
