@@ -3,35 +3,41 @@
 This repository contains a fully automated deployment pipeline project that demonstrates how to streamline software delivery using a combination of Terraform, Docker, Jenkins, Prometheus, and Grafana. The project automates infrastructure provisioning, CI/CD, and monitoring to eliminate the classic "it works on my machine" problem.
 
 ## Tools and Their Roles:
-### 1.Terraform:
+### 1. Terraform:
 - Provisions infrastructure in a declarative manner. 
 - Creates a Docker network (my_network) and deploys an Nginx container with custom configuration (from nginx.conf).
 
-### 2.Docker:
+### 2. Docker:
 - Containerizes the Node.js application and runs all services in isolated environments.
 - Ensures consistency across different environments.
 
-### 3.Jenkins:
+### 3. Jenkins:
 - Automates the CI/CD pipeline.
 - Uses the Jenkinsfile to check out code, build the Docker image, run tests, and deploy the sample app container on the Docker network.
 
-### 4.Prometheus & Grafana:
+### 4. Prometheus & Grafana:
 - Prometheus: Collects application metrics (exposed at /metrics by the sample app).
 - Grafana: Visualizes metrics from Prometheus using custom dashboards.
 - Both are deployed via Docker Compose (see docker-compose.yml).
 
 ## How to Get Started
-1. Provision Infrastructure with Terraform
-   1.a. Navigate to the terraform directory:
+- **Provision Infrastructure with Terraform**
+   - Navigate to the terraform directory:
+      ```
       cd terraform
-   1.b. Initialise Terraform:
+      ```
+   - Initialise Terraform:
+      ```
       terraform init
-   1.c. Plan and Apply:
+      ```
+   - Plan and Apply:
+      ```
       terraform plan
       terraform apply -auto-approve
+      ```
 This creates the Docker network my_network and deploys an Nginx container configured with nginx.conf
 
-2. Set Up Jenkins:
+- **Set Up Jenkins**
    2.a. Run Jenkins in Docker (ensuring it has access to the Docker daemon):
    docker run -d -p 8080:8080 -p 50000:50000 --name jenkins \-v jenkins_home:/var/jenkins_home \-v /var/run/docker.sock:/var/run/docker.sock \jenkins/jenkins:lts
    
@@ -49,7 +55,7 @@ This creates the Docker network my_network and deploys an Nginx container config
    Test: Runs tests (e.g., npm test).
    Deploy: Deploys the container onto my_network and maps port 3000.
 
-3. Deploy Monitoring with Prometheus and Grafana
+- **Deploy Monitoring with Prometheus and Grafana**
    3.a. Configure Prometheus:
    Ensure your prometheus.yml is set to scrape metrics from the sample-app container
    
@@ -64,16 +70,16 @@ This creates the Docker network my_network and deploys an Nginx container config
    Create dashboards to visualize the metrics scraped from the sample-app’s /metrics endpoint.
 
 ## Additional Notes
-1.Environment Consistency:
+### Environment Consistency:
 Using Terraform for provisioning ensures that every deployment starts from an identical infrastructure state.
 
-2.CI/CD Automation:
+### CI/CD Automation:
 Jenkins automates the entire build-test-deploy cycle, ensuring reliable deployments.
 
-3.Monitoring:
+### Monitoring:
 Prometheus and Grafana provide real-time visibility into the application’s performance, enabling quick troubleshooting and performance tuning.
 
-4.Integration:
+### Integration:
 All components work together seamlessly. Terraform sets up the environment, Jenkins automates application delivery, and Prometheus with Grafana offers continuous monitoring.
 
 ## Conclusion
