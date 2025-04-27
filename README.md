@@ -21,6 +21,7 @@ This repository contains a fully automated deployment pipeline project that demo
 - Both are deployed via Docker Compose (see docker-compose.yml).
 
 ## How to Get Started
+
 - **Provision Infrastructure with Terraform**
    - Navigate to the terraform directory:
       ```
@@ -38,36 +39,39 @@ This repository contains a fully automated deployment pipeline project that demo
 This creates the Docker network my_network and deploys an Nginx container configured with nginx.conf
 
 - **Set Up Jenkins**
-   2.a. Run Jenkins in Docker (ensuring it has access to the Docker daemon):
+   - Run Jenkins in Docker (ensuring it has access to the Docker daemon):
+   ```
    docker run -d -p 8080:8080 -p 50000:50000 --name jenkins \-v jenkins_home:/var/jenkins_home \-v /var/run/docker.sock:/var/run/docker.sock \jenkins/jenkins:lts
+   ```
+   - Access Jenkins at http://localhost:8080 and complete the initial setup.
    
-   Access Jenkins at http://localhost:8080 and complete the initial setup.
+   - Configure the Pipeline Job:
+      - Create a new Pipeline job (e.g., Sample-App-Pipeline) in Jenkins.
+      - Under Pipeline script from SCM, set the SCM type to Git and provide the repository URL.
+      - Set the Script Path to Jenkinsfile.
+      - Save and run the job.
    
-   2.b. Configure the Pipeline Job:
-   Create a new Pipeline job (e.g., Sample-App-Pipeline) in Jenkins.
-   Under Pipeline script from SCM, set the SCM type to Git and provide the repository URL.
-   Set the Script Path to Jenkinsfile.
-   Save and run the job.
-   
-   2.c. Pipeline Stages (Defined in Jenkinsfile):
-   Checkout: Retrieves the latest code.
-   Build: Uses the Dockerfile to build the Docker image for the Node.js app.
-   Test: Runs tests (e.g., npm test).
-   Deploy: Deploys the container onto my_network and maps port 3000.
+   - Pipeline Stages (Defined in Jenkinsfile):
+      - Checkout: Retrieves the latest code.
+      - Build: Uses the Dockerfile to build the Docker image for the Node.js app.
+      - Test: Runs tests (e.g., npm test).
+      - Deploy: Deploys the container onto my_network and maps port 3000.
 
 - **Deploy Monitoring with Prometheus and Grafana**
-   3.a. Configure Prometheus:
+   - Configure Prometheus:
    Ensure your prometheus.yml is set to scrape metrics from the sample-app container
    
-   3.b. Run Docker Compose:
-   From the root of the repository (where docker-compose.yml is located), run:
+   - Run Docker Compose:
+      -From the root of the repository (where docker-compose.yml is located), run:
+   ```
    docker-compose up -d
-   or pull the docker image of Grafana with the same name mentioned in docker-compose.yml
-   Prometheus will be available at http://localhost:9090 and Grafana at http://localhost:3001.
+   ```
+   or pull the docker image of Grafana with the same name mentioned in `docker-compose.yml`
+      - Prometheus will be available at `http://localhost:9090` and Grafana at `http://localhost:3001`
    
-   3.c. Configure Grafana:
-   In Grafana, add Prometheus as a data source (URL: http://prometheus:9090 if on the same network, or http://127.0.0.1:9090).
-   Create dashboards to visualize the metrics scraped from the sample-app’s /metrics endpoint.
+   - Configure Grafana:
+      - In Grafana, add Prometheus as a data source (URL: `http://prometheus:9090` if on the same network, or `http://127.0.0.1:9090`).
+      - Create dashboards to visualize the metrics scraped from the sample-app’s /metrics endpoint.
 
 ## Additional Notes
 ### Environment Consistency:
