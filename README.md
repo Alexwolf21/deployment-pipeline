@@ -3,22 +3,22 @@
 This repository contains a fully automated deployment pipeline project that demonstrates how to streamline software delivery using a combination of Terraform, Docker, Jenkins, Prometheus, and Grafana. The project automates infrastructure provisioning, CI/CD, and monitoring to eliminate the classic "it works on my machine" problem.
 
 ## Tools and Their Roles:
-**1.Terraform:**
-Provisions infrastructure in a declarative manner.
-Creates a Docker network (my_network) and deploys an Nginx container with custom configuration (from nginx.conf).
+### 1.Terraform:
+- Provisions infrastructure in a declarative manner. 
+- Creates a Docker network (my_network) and deploys an Nginx container with custom configuration (from nginx.conf).
 
-**2.Docker:**
-Containerizes the Node.js application and runs all services in isolated environments.
-Ensures consistency across different environments.
+### 2.Docker:
+- Containerizes the Node.js application and runs all services in isolated environments.
+- Ensures consistency across different environments.
 
-3.Jenkins:
-Automates the CI/CD pipeline.
-Uses the Jenkinsfile to check out code, build the Docker image, run tests, and deploy the sample app container on the Docker network.
+### 3.Jenkins:
+- Automates the CI/CD pipeline.
+- Uses the Jenkinsfile to check out code, build the Docker image, run tests, and deploy the sample app container on the Docker network.
 
-4.Prometheus & Grafana:
-Prometheus: Collects application metrics (exposed at /metrics by the sample app).
-Grafana: Visualizes metrics from Prometheus using custom dashboards.
-Both are deployed via Docker Compose (see docker-compose.yml).
+### 4.Prometheus & Grafana:
+- Prometheus: Collects application metrics (exposed at /metrics by the sample app).
+- Grafana: Visualizes metrics from Prometheus using custom dashboards.
+- Both are deployed via Docker Compose (see docker-compose.yml).
 
 ## How to Get Started
 1. Provision Infrastructure with Terraform
