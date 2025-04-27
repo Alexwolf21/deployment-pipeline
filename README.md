@@ -3,11 +3,13 @@
 This repository contains a fully automated deployment pipeline project that demonstrates how to streamline software delivery using a combination of Terraform, Docker, Jenkins, Prometheus, and Grafana. The project automates infrastructure provisioning, CI/CD, and monitoring to eliminate the classic "it works on my machine" problem.
 
 ## Tools and Their Roles:
-1.Terraform:
+**1.Terraform:**
+
 Provisions infrastructure in a declarative manner.
 Creates a Docker network (my_network) and deploys an Nginx container with custom configuration (from nginx.conf).
 
-2.Docker:
+**2.Docker:**
+
 Containerizes the Node.js application and runs all services in isolated environments.
 Ensures consistency across different environments.
 
